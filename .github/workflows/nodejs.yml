@@ -1,0 +1,22 @@
+name: Node.js CI
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [16.x, 18.x, 20.x] # Test across Node versions
+
+    steps:
+      - uses: actions/checkout@v4 # Check out code
+      - uses: actions/setup-node@v3 # Set up Node.js
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: npm install # Install deps
+      - run: npm test # Run tests
